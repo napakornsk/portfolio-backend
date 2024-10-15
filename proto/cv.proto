@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+option go_package = "github.com/napakornsk/cv-backend";
+
+message Intro {
+    string pos = 2;                 // Position title
+    string email = 3;               // Email address
+    string mobile_phone = 4;        // Corrected typo
+    string address = 5;             // Physical address
+    string summary = 6;             // Professional summary
+}
+
+message WorkExperience {
+    string company_name = 2;         // Company name
+    string role = 3;                 // Role/Position at company
+    string description = 4;          // Brief description of the job
+    string start_date = 5;           // Start date in YYYY-MM format
+    string end_date = 6;             // End date (or empty if current)
+    repeated WorkDesc work_desc = 7; // List of detailed work descriptions
+}
+
+message WorkDesc {
+    string description = 2;         // Detailed description of work responsibility
+}
+
+message Education {
+    string school_name = 2;          // Name of the school or institution
+    string degree = 3;               // Degree obtained
+    string field = 4;                // Field of study
+    string start_date = 5;           // Start date in YYYY-MM format
+    string end_date = 6;             // End date in YYYY-MM format
+}
+
+message Skill {
+    string skill_name = 2;           // Name of the skill
+}
+
+message CV {
+    string id = 1;
+    Intro intro = 2;                 // Introduction section
+    repeated WorkExperience experiences = 3;  // List of work experiences
+    repeated Education education = 4;         // List of education entries
+    repeated Skill skills = 5;                // List of skills
+}
+
+message CreateCVReq {
+    CV cv = 1;                      // CV data
+}
+
+message CreateCVRes {
+    string id = 1;                   // ID of the newly created CV
+}
+
+message GetCVReq {
+    string id = 1;                   // ID of the requested CV
+}
+
+message GetCVRes {
+    CV cv = 1;                      // CV data
+}
+service CVService {
+    rpc CreateCV (CreateCVReq) returns (CreateCVRes);
+    rpc GetCV (GetCVReq) returns (GetCVRes);
+}
