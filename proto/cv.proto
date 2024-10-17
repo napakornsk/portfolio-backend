@@ -3,6 +3,7 @@ syntax = "proto3";
 option go_package = "github.com/napakornsk/cv-backend";
 
 message Intro {
+    int64 id = 1;
     string pos = 2;                 // Position title
     string email = 3;               // Email address
     string mobile_phone = 4;        // Corrected typo
@@ -36,7 +37,7 @@ message Skill {
 }
 
 message CV {
-    string id = 1;
+    int64 id = 1;
     Intro intro = 2;                 // Introduction section
     repeated WorkExperience experiences = 3;  // List of work experiences
     repeated Education education = 4;         // List of education entries
@@ -48,11 +49,11 @@ message CreateCVReq {
 }
 
 message CreateCVRes {
-    string id = 1;                   // ID of the newly created CV
+    int64 id = 1;                   // ID of the newly created CV
 }
 
 message GetCVReq {
-    string id = 1;                   // ID of the requested CV
+    int64 id = 1;                   // ID of the requested CV
 }
 
 message GetCVRes {

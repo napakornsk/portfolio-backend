@@ -38,9 +38,9 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 
-	database.IintPostgresDB()
+	database.InitPostgresDB()
 
-	pb.RegisterCVServiceServer(grpcServer, &cv.CVServer{PostgresClient: database.Db})
+	pb.RegisterCVServiceServer(grpcServer, &cv.CVServer{PostgresClient: database.PostgresDb})
 	log.Printf("Starting gRPC server on PORT: %s\n", port)
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve gRPC server: %v", err)

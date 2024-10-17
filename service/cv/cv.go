@@ -30,9 +30,15 @@ func (s *CVServer) GetCV(ctx context.Context, req *pb.GetCVReq) (
 	*pb.GetCVRes,
 	error,
 ) {
-	log.Printf("GetCV was invoked with ID: %s", req.GetId())
+	log.Printf("GetCV was invoked with ID: %d", req.GetId())
 
 	return &pb.GetCVRes{
-		Cv: nil,
+		Cv: &pb.CV{
+			Id: 1,
+			Intro: &pb.Intro{
+				Id: 1,
+				Pos: "TEST",
+			},
+		},
 	}, nil
 }

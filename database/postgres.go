@@ -10,9 +10,9 @@ import (
 	"gorm.io/gorm"
 )
 
-var Db *gorm.DB
+var PostgresDb *gorm.DB
 
-func IintPostgresDB() {
+func InitPostgresDB() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
@@ -60,5 +60,5 @@ func IintPostgresDB() {
 	}
 
 	fmt.Println("Successfully connected to PostgreSQL!")
-	Db = db
+	PostgresDb = db
 }
