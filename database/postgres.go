@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var PostgresDb *gorm.DB
@@ -54,7 +56,19 @@ func InitPostgresDB() {
 	)
 	fmt.Println("DSN: ", dsn)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io.Writer output
+		logger.Config{
+			SlowThreshold:             time.Second, // Log queries slower than this threshold
+			LogLevel:                  logger.Info, // Log level (Info, Warn, Error, Silent)
+			IgnoreRecordNotFoundError: false,       // Ignore ErrRecordNotFound errors for logger
+			Colorful:                  true,        // Enable color output
+		},
+	)
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: newLogger,
+	})
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}

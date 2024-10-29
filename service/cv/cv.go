@@ -4,6 +4,8 @@ import (
 	"context"
 	"log"
 
+	"github.com/napakornsk/cv-backend/database"
+	"github.com/napakornsk/cv-backend/models"
 	pb "github.com/napakornsk/cv-backend/pb"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
@@ -21,9 +23,31 @@ func (s *CVServer) CreateCV(ctx context.Context, req *pb.CreateCVReq) (
 ) {
 	log.Println("Received CreateCV request")
 
-	// Example logic to create a CV
-	// cv := req.GetCv() // Extract the CV object from the request
-	return nil, nil
+	cv := req.GetCv()
+	tx := database.PostgresDb.Begin()
+
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if err := tx.Error; err != nil {
+		return nil, err
+	}
+
+	if err := tx.Omit("id").Create(cv).Error; err != nil {
+		return nil, err
+	}
+
+	cvModel := new(models.CV)
+	if err := tx.Last(cvModel).Error; err != nil {
+		return nil, err
+	}
+
+	return &pb.CreateCVRes{
+		Id: cvModel.ID,
+	}, nil
 }
 
 func (s *CVServer) GetCV(ctx context.Context, req *pb.GetCVReq) (
@@ -36,7 +60,7 @@ func (s *CVServer) GetCV(ctx context.Context, req *pb.GetCVReq) (
 		Cv: &pb.CV{
 			Id: 1,
 			Intro: &pb.Intro{
-				Id: 1,
+				Id:  1,
 				Pos: "TEST",
 			},
 		},

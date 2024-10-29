@@ -23,10 +23,13 @@ clean:
 run:
 	go run cmd/server/main.go
 
+migrate:
+	go run migration/migration.go
+
 dock_up:
 	docker-compose up
 
 dock_down:
 	docker-compose down
 
-.PHONY: proto clean run dock_up dock_down
+.PHONY: proto clean run migrate dock_up dock_down
