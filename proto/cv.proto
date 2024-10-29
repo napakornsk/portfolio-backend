@@ -8,32 +8,43 @@ message Intro {
     string email = 3;               // Email address
     string mobile_phone = 4;        // Corrected typo
     string address = 5;             // Physical address
-    string summary = 6;             // Professional summary
+    string summary = 6;             // Professional 
+    int64 cv_id = 7;
+    
 }
 
 message WorkExperience {
+    int64 id = 1;
     string company_name = 2;         // Company name
     string role = 3;                 // Role/Position at company
     string description = 4;          // Brief description of the job
     string start_date = 5;           // Start date in YYYY-MM format
     string end_date = 6;             // End date (or empty if current)
     repeated WorkDesc work_desc = 7; // List of detailed work descriptions
+    int64 cv_id = 8;
 }
 
 message WorkDesc {
+    int64 id = 1;
     string description = 2;         // Detailed description of work responsibility
+    int64 work_id = 3;
 }
 
 message Education {
+    int64 id = 1;
     string school_name = 2;          // Name of the school or institution
     string degree = 3;               // Degree obtained
     string field = 4;                // Field of study
     string start_date = 5;           // Start date in YYYY-MM format
     string end_date = 6;             // End date in YYYY-MM format
+    int64 cv_id = 7;
 }
 
 message Skill {
+    int64 id = 1;
     string skill_name = 2;           // Name of the skill
+    int64 cv_id = 3;
+
 }
 
 message CV {
@@ -42,6 +53,7 @@ message CV {
     repeated WorkExperience experiences = 3;  // List of work experiences
     repeated Education education = 4;         // List of education entries
     repeated Skill skills = 5;                // List of skills
+    int64 uid = 6;
 }
 
 message CreateCVReq {

@@ -23,4 +23,7 @@ clean:
 run:
 	go run cmd/server/main.go
 
-.PHONY: proto clean run
+migrate:
+	go run migration/migration.go
+
+.PHONY: proto clean run migrate
