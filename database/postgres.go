@@ -54,7 +54,7 @@ func InitPostgresDB() {
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s",
 		host, user, password, dbName, port, sslMode, timezone,
 	)
-	fmt.Println("DSN: ", dsn)
+	// fmt.Println("DSN: ", dsn)
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io.Writer output

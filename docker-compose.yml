@@ -1,17 +1,18 @@
 version: '3.9'
 
 services:
-  db:
-    image: postgres
+  pg:
+    image: postgres:latest
+    container_name: pg
     restart: always
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
     ports:
-      -"6432:5432"
+      - "5433:5432"
+    hostname: 127.0.0.1
+    volumes:
+      - pgdata:/var/lib/postgresql/data  # Mount a volume for persistence
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+volumes:
+  pgdata:

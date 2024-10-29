@@ -16,7 +16,6 @@ proto:
 		--go-grpc_out=$(PROTO_OUT_DIR) --go-grpc_opt=paths=source_relative \
 		$(PROTO_FILES)
 
-
 clean:
 	rm -rf $(PROTO_OUT_DIR)/*.go
 
@@ -27,9 +26,9 @@ migrate:
 	go run migration/migration.go
 
 dock_up:
-	docker-compose up
+	docker-compose up -d
 
 dock_down:
 	docker-compose down
 
-.PHONY: proto clean run migrate dock_up dock_down
+.PHONY: all proto clean run migrate dock_up dock_down
