@@ -23,4 +23,10 @@ clean:
 run:
 	go run cmd/server/main.go
 
-.PHONY: proto clean run
+dock_up:
+	docker-compose up
+
+dock_down:
+	docker-compose down
+
+.PHONY: proto clean run dock_up dock_down
